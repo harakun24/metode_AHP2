@@ -60,7 +60,11 @@ for ($i = 0; $i < count($jurusan); $i++) {
             'peserta' => $ahp->admin::$session->get("userid"),
             'sub' => $s['sub_id'],
         ])->first()['nilai'];
-        $un += ($nilai / count($jurusan)) * $s['matrik']['eigen']['avg'][$i];
+        $un += $nilai * ($s['matrik']['eigen']['avg'][$i] *
+            $ahp->ns->where([
+                'sub' => $s['sub_id'],
+                'peserta' => $ahp->admin::$session->get("userid"),
+            ])->first()['nilai']);
     }
     $jurusan[$i]['un'] = round($mk['eigen']['avg'][$j] * ($un), 4);
 
